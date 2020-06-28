@@ -5,11 +5,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 module.exports = {
     entry:'./public/main.js',
     output: {
-        path:path.resolve(__dirname,'build'),
+        path:path.resolve(__dirname,'dist'),
         filename:'bundle.js'
     },
     devServer:{
-        contentBase:'./build',
+        contentBase:'./dist',
         host:'localhost',
         port:8080,
         open:true
@@ -22,6 +22,7 @@ module.exports = {
                     {
                         loader:'file-loader',
                         options:{
+                            esModule:false,
                             outputPath:'./img'
                         }
                     }
@@ -29,21 +30,43 @@ module.exports = {
             },
             {
                 test:/\.(eot|svg|ttf|woff|woff2)$/,
-                use:'file-loader'
+                use:[{
+                    loader:'file-loader',
+                    options:{
+                        outputPath:'./fonts'
+                    }
+                }]
             },
             {
                 test:/\.css$/,
                 use:['style-loader','css-loader']
             },
             {
+                test:/\.scss$/,
+                use:[
+                    {loader:'style-loader'},
+                    {loader:'css-loader'},
+                    {loader:'sass-loader'}
+                ]
+            },
+            {
                 test:/\.vue$/,
                 use:['vue-loader']
+            },
+            {
+                test:/\.(html)$/,
+                use:{
+                    loader:'html-loader?attributes=img:src',
+                    options: {
+                        attrs: ['img:src', 'img:data-src']
+                    }
+                }
             }
         ]
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template:'./public/index.html',
+            template:'./public/index.ejs',
             filename:'webpack.html'
         }),
         new VueLoaderPlugin()
