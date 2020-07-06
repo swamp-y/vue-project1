@@ -4,12 +4,19 @@ import Vue from 'vue'
 //导入vue组件
 import app from './App.vue'
 
-//导入mint-ui顶部栏、轮播图
-import { Header,Swipe, SwipeItem } from 'mint-ui';
+//按需导入mint-ui顶部栏、轮播图
+// import { Header,Swipe, SwipeItem,Button, Lazyload } from 'mint-ui';
+// import 'mint-ui/lib/style.css'
+// Vue.component(Header.name, Header);    
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Button.name, Button);
+// Vue.use(Lazyload);
+
+//整个导入mint-ui
+import Mint from 'mint-ui';
+Vue.use(Mint);
 import 'mint-ui/lib/style.css'
-Vue.component(Header.name, Header);    
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
 
 
 //导入mui

@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <!-- 顶部栏 -->
-        <mt-header fixed title="大雄的顶部栏"></mt-header>
+        <mt-header fixed title="大雄的顶部栏" class="mt-header"></mt-header>
 
         <!-- 中部占位路由 -->
         <transition >
@@ -39,6 +39,7 @@
 <style  scoped>
     .app-container{
         padding-top: 40px;
+		padding-bottom: 50px;
 		overflow-x: hidden;
     }
 
@@ -52,5 +53,12 @@
 	}
 	.v-enter-active,.v-leave-active{
 		transition: all .5s ease;
+		overflow-x: hidden;
+	}
+
+
+
+	.mint-header.is-fixed{
+		z-index: 99;
 	}
 </style>
