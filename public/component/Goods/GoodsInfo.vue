@@ -25,11 +25,8 @@
                         </p>
                         <div>
                             <p class="np">购买数量：</p>
-                        <div class="mui-numbox" data-numbox-min='1' data-numbox-max='9'>
-                            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-                            <input id="test" class="mui-input-numbox" type="number" value="5" />
-                            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
-				        </div>
+                        <!-- 数字按钮位置 -->
+                        <numberbox @getcount="getcarcount"></numberbox>
                         </div>
                         <p>
                             <mt-button type="primary">立即购买</mt-button>
@@ -61,16 +58,18 @@
 
 import myswiper from '../overall/MySwiper.vue'
 import mui from '../../lib/mui/js/mui.min.js'
+import numberbox from '../overall/NumberBox.vue'
 export default {
     data() {
         return {
-            flag:false,
-            id:this.$route.params.id,
-            list:[
-                {id: 0, src: "https://img12.360buyimg.com/n1/s450x450_jfs/t1/59022/28/10293/141808/5d78088fEf6e7862d/68836f52ffaaad96.jpg"},
-                {id: 1, src: "https://img14.360buyimg.com/n0/jfs/t1/60950/5/9837/104923/5d780897E82963984/08fed8837c92433a.jpg"},
-                {id: 2, src: "https://img14.360buyimg.com/n0/jfs/t1/80220/18/9892/163090/5d78089cEda2f9674/da3b18358e68cfca.jpg"}
-            ]
+            flag: false,
+            id: this.$route.params.id,
+            list: [
+                {id: 0,price:9999, src: "https://img12.360buyimg.com/n1/s450x450_jfs/t1/59022/28/10293/141808/5d78088fEf6e7862d/68836f52ffaaad96.jpg"},
+                {id: 1, price: 897, src: "https://img14.360buyimg.com/n0/jfs/t1/60950/5/9837/104923/5d780897E82963984/08fed8837c92433a.jpg"},
+                {id: 2, price: 7664, src: "https://img14.360buyimg.com/n0/jfs/t1/80220/18/9892/163090/5d78089cEda2f9674/da3b18358e68cfca.jpg"}
+            ],
+            carcount:0
         }
     },
     methods: {
@@ -78,9 +77,17 @@ export default {
             this.$router.push('/home/goodsdec/'+id)
         },
 
-        // 小球动画触发函数
+        // 加入购物车动画及功能
         balldown(){
             this.flag = !this.flag
+
+            //vuex公共储存
+            var objcom = {
+                id: this.id,
+                count: this.carcount,
+                price:9999
+            }
+            this.$store.commit("addcomm",objcom)
         },
         // 小球生命周期函数
         beforeEnter(el){
@@ -98,13 +105,18 @@ export default {
         },
         afterEnter(el){
             this.flag = !this.flag;
+        },
+        //numberbox子组件向父组件传值
+        getcarcount(count){
+            this.carcount = count
         }
     },
     mounted() {
         mui(".mui-numbox").numbox()
     },
     components:{
-        myswiper
+        myswiper,
+        numberbox
     }
 }
 </script>
@@ -124,9 +136,7 @@ export default {
     .np{
         display: inline-block;
     }
-    .mui-numbox {
-        height: 25px;
-    }
+    
     .mui-card-footer{
         display: block;
     }

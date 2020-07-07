@@ -30,12 +30,60 @@ Vue.use(VueRouter)
 //导入独立路由
 import router from './router.js'
 
+// 注册vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+// 注册resource
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+
+//每次进入网站调用本地存储
+var car = JSON.parse(localStorage.getItem('car') || '[]')
+//创建vuex状态管理
+var store = new Vuex.Store({
+    state: {  //this.$store.state.****
+        car: car,  //储存购物车的商品数据 
+        
+    },
+    mutations: {  //this.$store.commit("方法名称"，参数 )
+        addcomm(state,obj){
+            var flag = false
+            state.car.some( item =>{
+                
+                //如果有此商品则增加数量
+                if(obj.id == item.id){
+                    item.count += parseInt(obj.count);
+                    flag = true
+                    return true
+                }
+            }
+            )
+            if(!flag){
+                state.car.push(obj)
+            }
+             //添加到本地储存
+             localStorage.setItem("car",JSON.stringify(state.car))
+        }
+    },
+    getters: {  //this.$store.getters.***
+        getcount(state){
+            var i = 0;
+            state.car.forEach(
+                item =>{
+                    i +=item.count
+                }
+            )
+
+            return i
+        }
+    }
+})
 
 //创建vm
 var vm = new Vue({
     el:'#app',
     render: c => c(app),
-    router
+    router,
+    store
 })

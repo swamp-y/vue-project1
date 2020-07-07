@@ -27,3 +27,55 @@
 });
 
 ```
+
+## 5、商品购买页面，
+
+### 加入购物车的小球动画以及在不同滑动距离的动画兼容
+### 核心点：vuex，商品购买数量的不同组件传值
+
+### 逻辑记录：
+### 通过change事件监听商品数量输入框的不同情况下的变换，通过getcount事件调用，把商品数量传递给父组件（商品详情页面）
+### 点击加入购物车，拼接出一个商品对象，加载vuex，将对象增加给vuex的state中，判断是否存在此商品，有则数量属性相加，无则创建新对象，以便于底部栏调用vuex中所保存商品信息对象的数量总和
+
+```
+        var store = new Vuex.Store({
+        state: {  //this.$store.state.****
+            car: car,  //储存购物车的商品数据 
+            
+        },
+        mutations: {  //this.$store.commit("方法名称"，参数 )
+            addcomm(state,obj){
+                var flag = false
+                state.car.some( item =>{
+                    
+                    //如果有此商品则增加数量
+                    if(obj.id == item.id){
+                        item.count += parseInt(obj.count);
+                        flag = true
+                        return true
+                    }
+                }
+                )
+                if(!flag){
+                    state.car.push(obj)
+                }
+                //添加到本地储存
+                localStorage.setItem("car",JSON.stringify(state.car))
+            }
+        },
+        getters: {  //this.$store.getters.***
+            getcount(state){
+                var i = 0;
+                state.car.forEach(
+                    item =>{
+                        i +=item.count
+                    }
+                )
+
+                return i
+            }
+        }
+    })
+
+```
+
