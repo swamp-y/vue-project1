@@ -1,8 +1,8 @@
 <template>
     <div>
          <mt-swipe :auto="4000" class="swiper-banner"> 
-            <mt-swipe-item v-for="item in list" :key="item">
-                <img :src="item" alt="">
+            <mt-swipe-item v-for="item in list" :key="item.id">
+                <img :src="item.src" alt="" :class="{'full':isfull}">
             </mt-swipe-item>
                   
         </mt-swipe>
@@ -11,18 +11,18 @@
 
 <script>
 export default {
-    props:["list"]
+    props:["list","isfull"]
 }
 </script>
 
 <style scoped>
     .swiper-banner{
         height: 200px;
-
+        text-align: center;
     }
     .swiper-banner img{
+       
         height: 100%;
-        width: 100%;
     }
     .mui-table-view{
         background-color: #fff;
@@ -31,5 +31,9 @@ export default {
     }
     .mui-grid-view.mui-grid-9 .mui-table-view-cell{
         border: none;
+    }
+
+    .full{
+        width: 100%;
     }
 </style>

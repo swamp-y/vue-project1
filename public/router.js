@@ -12,6 +12,7 @@ import imglist from './component/imglist/ImgList.vue'
 import imginfo from './component/imglist/ImgInfo.vue'
 import goodslist from './component/Goods/GoodList.vue'
 import goodsinfo from './component/Goods/GoodsInfo.vue'
+import goodsdec from './component/Goods/GoodsDec.vue'
 //创建路由
 var router = new VueRouter({
     //配置路由规则
@@ -30,7 +31,8 @@ var router = new VueRouter({
         {path: '/home/imginfo/:id', component: imginfo},
         // 商品购买路由
         {path: '/home/goodslist', component: goodslist},
-        {path: '/home/goodsinfo/:id', component: goodsinfo}
+        {path: '/home/goodsinfo/:id', component: goodsinfo},
+        {path: '/home/goodsdec/:id', component:  goodsdec}
         
     ],
     linkActiveClass: 'mui-active'

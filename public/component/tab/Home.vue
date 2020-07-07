@@ -3,7 +3,7 @@
         <!-- <h1>home组件</h1> -->
 
         <!-- 轮播图部分 -->
-       <my-swiper :list="list"></my-swiper>
+       <my-swiper :list="list" :isfull=true></my-swiper>
 
         <!-- 导航六宫格 -->
          <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -39,10 +39,11 @@
            
             data() {
                 return {
-                    swp1:[
-                            {src:"../../lib/img/bg2.jpg"}
-                    ],
-                    list:["../../lib/img/bg2.jpg","../../lib/img/bg1.jpg"]
+                    
+                    list:[
+                         {id: 0, src: "https://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1594633852&t=1ef76d5083fe37c86b1ecf59735bba61"},
+                    {id: 1, src: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2335993180,2925318775&fm=26&gp=0.jpg"}
+                    ]
                 }
             },
             created() {

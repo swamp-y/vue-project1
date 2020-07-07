@@ -1,31 +1,58 @@
 <template>
     <div class="goods-container">
+        <!-- 购物车动画球 -->
+        <transition 
+            @before-enter='beforeEnter' 
+            @enter="enter"
+            @after-enter="afterEnter">
+            <div class="ball" v-show="flag" ref="ball"></div>
+        </transition>
+        
         <div class="mui-card">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						<myswiper></myswiper>
+						<myswiper :list="list" :isfull=false></myswiper>
 					</div>
 				</div>
 		</div>
 
         <div class="mui-card">
-				<div class="mui-card-header">页眉</div>
+				<div class="mui-card-header">商品的标题名称</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+						<p>
+                            市场价：<del>12000</del> &nbsp;&nbsp;销售价：<span class="new-price">￥9999</span>
+                        </p>
+                        <div>
+                            <p class="np">购买数量：</p>
+                        <div class="mui-numbox" data-numbox-min='1' data-numbox-max='9'>
+                            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                            <input id="test" class="mui-input-numbox" type="number" value="5" />
+                            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+				        </div>
+                        </div>
+                        <p>
+                            <mt-button type="primary">立即购买</mt-button>
+                            <mt-button type="danger" @click="balldown">加入购物车</mt-button>
+                        </p>
 					</div>
 				</div>
 		</div>
 
 
         <div class="mui-card">
-				<div class="mui-card-header">页眉</div>
+				<div class="mui-card-header">商品参数</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
+						<p>商品型号：</p>
+                        <p>商品颜色：</p>
+                        <p>商品大小：</p>
 					</div>
 				</div>
-				<div class="mui-card-footer">页脚</div>
+				<div class="mui-card-footer">
+                    <mt-button type="primary" size="large" plain @click="getdec(id)">图文介绍</mt-button>
+                    <mt-button type="danger" size="large" plain>商品评论</mt-button>
+                </div>
 			</div>
     </div>
 </template>
@@ -33,15 +60,48 @@
 <script>
 
 import myswiper from '../overall/MySwiper.vue'
-
+import mui from '../../lib/mui/js/mui.min.js'
 export default {
     data() {
         return {
-            
+            flag:false,
+            id:this.$route.params.id,
+            list:[
+                {id: 0, src: "https://img12.360buyimg.com/n1/s450x450_jfs/t1/59022/28/10293/141808/5d78088fEf6e7862d/68836f52ffaaad96.jpg"},
+                {id: 1, src: "https://img14.360buyimg.com/n0/jfs/t1/60950/5/9837/104923/5d780897E82963984/08fed8837c92433a.jpg"},
+                {id: 2, src: "https://img14.360buyimg.com/n0/jfs/t1/80220/18/9892/163090/5d78089cEda2f9674/da3b18358e68cfca.jpg"}
+            ]
         }
     },
     methods: {
-        
+        getdec(id){
+            this.$router.push('/home/goodsdec/'+id)
+        },
+
+        // 小球动画触发函数
+        balldown(){
+            this.flag = !this.flag
+        },
+        // 小球生命周期函数
+        beforeEnter(el){
+            el.style.transform = "translate(0, 0)"
+        },
+        enter(el, done){
+            el.offsetWidth;
+            const balldre = this.$refs.ball.getBoundingClientRect();
+            const footbar = document.getElementById('badge').getBoundingClientRect();
+            const runx = footbar.left - balldre.left;
+            const runy = footbar.top - balldre.top;
+            el.style.transform = `translate(${runx}px ,${runy}px)`;
+            el.style.transition = "all 1s cubic-bezier(.37,-0.36,1,.56)";
+            done()
+        },
+        afterEnter(el){
+            this.flag = !this.flag;
+        }
+    },
+    mounted() {
+        mui(".mui-numbox").numbox()
     },
     components:{
         myswiper
@@ -53,5 +113,36 @@ export default {
     .goods-container{
         background-color: #efefef;
         overflow: hidden;
+    }
+    .swiper-banner{
+       height: 100%;
+
+    }
+    .new-price{
+        color: red;
+    }
+    .np{
+        display: inline-block;
+    }
+    .mui-numbox {
+        height: 25px;
+    }
+    .mui-card-footer{
+        display: block;
+    }
+    .mui-card-footer button{
+        margin: 10px 0;
+    }
+
+    .ball{
+        width: 15px ;
+        height: 15px ;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        left: 150px;
+        top: 385px;
+        z-index: 99;
+        
     }
 </style>

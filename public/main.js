@@ -22,7 +22,7 @@ import 'mint-ui/lib/style.css'
 //导入mui
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
-
+import './lib/mui/css/app.css'
 //导入路由
 import VueRouter from 'vue-router'
 //安装路由
