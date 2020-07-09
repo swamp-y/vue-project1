@@ -64,6 +64,31 @@ var store = new Vuex.Store({
             }
              //添加到本地储存
              localStorage.setItem("car",JSON.stringify(state.car))
+        },
+        updata(state,objj){
+            console.log(objj);
+            
+            state.car.some( item =>{
+                if(item.id == objj.id){
+                    
+                    item.count = parseInt(objj.count)
+                    return true
+                    
+                }
+
+            })
+            //添加到本地储存
+            localStorage.setItem("car",JSON.stringify(state.car))
+        },
+        remove(state,id){
+            state.car.some( (item, index) => {
+                if(item.id == id){
+                    state.car.splice( index, 1)
+                    return true
+                }
+            })
+            //添加到本地储存
+            localStorage.setItem("car",JSON.stringify(state.car))
         }
     },
     getters: {  //this.$store.getters.***
@@ -76,6 +101,26 @@ var store = new Vuex.Store({
             )
 
             return i
+        },
+        getOneCount(state){
+            var a ={};
+            state.car.forEach(
+                item =>{
+                    a[item.id] = item.count
+                }
+            )
+            return a
+        },
+        getAllPrice(state){
+            var tag = {
+                count: 0,
+                price : 0
+            }
+            state.car.forEach( item =>{
+                tag.count+= item.count;
+                tag.price+=item.price*item.count
+            })
+            return tag
         }
     }
 })

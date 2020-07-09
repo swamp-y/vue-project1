@@ -57,7 +57,6 @@
 <script>
 
 import myswiper from '../overall/MySwiper.vue'
-import mui from '../../lib/mui/js/mui.min.js'
 import numberbox from '../overall/NumberBox.vue'
 export default {
     data() {
@@ -69,7 +68,7 @@ export default {
                 {id: 1, price: 897, src: "https://img14.360buyimg.com/n0/jfs/t1/60950/5/9837/104923/5d780897E82963984/08fed8837c92433a.jpg"},
                 {id: 2, price: 7664, src: "https://img14.360buyimg.com/n0/jfs/t1/80220/18/9892/163090/5d78089cEda2f9674/da3b18358e68cfca.jpg"}
             ],
-            carcount:0
+            carcount:1
         }
     },
     methods: {
@@ -80,7 +79,8 @@ export default {
         // 加入购物车动画及功能
         balldown(){
             this.flag = !this.flag
-
+            //console.log(this.carcount);
+            
             //vuex公共储存
             var objcom = {
                 id: this.id,
@@ -111,9 +111,7 @@ export default {
             this.carcount = count
         }
     },
-    mounted() {
-        mui(".mui-numbox").numbox()
-    },
+    
     components:{
         myswiper,
         numberbox

@@ -1,7 +1,11 @@
 <template>
     <div class="app-container">
         <!-- 顶部栏 -->
-        <mt-header fixed title="大雄的顶部栏" class="mt-header"></mt-header>
+        <mt-header fixed title="大雄的顶部栏" class="mt-header">
+			  <a slot="left" @click="goback">
+					<mt-button icon="back">返回</mt-button>
+			  </a>
+		</mt-header>
 
         <!-- 中部占位路由 -->
         <transition >
@@ -33,7 +37,18 @@
 </template>
 
 <script>
-    
+    export default{
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			goback(){
+				this.$router.go(-1)
+			}
+		},
+	}
 </script>
 
 <style  scoped>
